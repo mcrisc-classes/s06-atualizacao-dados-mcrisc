@@ -2,7 +2,9 @@ package edu.ifsp.dsi;
 
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Main {
 	
@@ -17,7 +19,19 @@ public class Main {
 			 * vazia. Use o seu cliente MySQL para fazer isso.
 			 */
 						
-			// TODO: inserir contas aqui
+			String queryTemplate = "INSERT INTO conta (numero, saldo, titular)"
+					+ " VALUES (%d, %d, %d);";
+			try (Statement stmt = conn.createStatement()) {
+				String query = String.format(queryTemplate,
+						10, 500, 1);
+				System.out.println(query);
+				stmt.executeUpdate(query);
+				
+				query = String.format(queryTemplate,
+						11, 700, 2);
+				stmt.executeUpdate(query);
+				
+			}
 			
 			
 			/* 
@@ -30,7 +44,16 @@ public class Main {
 			 */
 			double[] valores = {50, 1200, -300, 100, -73, -41, 80, 15, -20};
 			
-			// TODO: registrar movimentações aqui
+			String query = "INSERT INTO movimentacao (origem, destino, valor) "
+					+ "VALUES (?, ?, ?);";
+			try (PreparedStatement ps = conn.prepareStatement(query)) {
+				for (double valor : valores) {
+					ps.setInt(1, 10);
+					ps.setInt(2, 11);
+					ps.setDouble(3, valor);
+					ps.executeUpdate();
+				}
+			}
 			
 			
 		} catch (SQLException e) {
