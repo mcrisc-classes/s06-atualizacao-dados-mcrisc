@@ -19,8 +19,7 @@ public class Main {
 			 * vazia. Use o seu cliente MySQL para fazer isso.
 			 */
 						
-			String queryTemplate = "INSERT INTO conta (numero, saldo, titular)"
-					+ " VALUES (%d, %d, %d);";
+			String queryTemplate = "INSERT INTO conta (numero, saldo, titular) VALUES (%d, %d, %d);";
 			try (Statement stmt = conn.createStatement()) {
 				String query = String.format(queryTemplate,
 						10, 500, 1);
